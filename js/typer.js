@@ -4,22 +4,29 @@ var line = 0; /* The current line to display */
 var speed = 50; /* The speed/duration of the effect in milliseconds */
 var cont; /* This is a boolean that checks if the current line has a <br> tag at the end. If it does, it will add a <br> tag to the end of the text. */
 var initial; /* This is a boolean that checks if the current line is the first line of the paragraph. If it is, it will clear the typeout div before typing out the text. */
+var eventer;
+function fadeInBackground() {
+  document.getElementById("background").classList.add("active");
+}
 function switcher(){
 switch(line) { /*DIALOGUE SWITCH CASES idk if this is effective, but I thought of it at the time. It's been a long assss time since I scripted lowkey.*/
   case 0:
     txt = "ARE YOU";
     cont = true;
     initial = true;
+    eventer = false;
     break;
 case 1:
     txt = "THERE?";
     cont = false;
     initial = false;
+    eventer = false;
     break;
   case 2:
     txt = "ARE WE";
     cont = true;
     initial = true;
+    eventer = false;
     break;
 case 3:
     txt = "CONNECTED?";
@@ -27,41 +34,48 @@ case 3:
     initial = false;
     break;
     case 4:
+    txt = "EXCELLENT.";
+    cont = false;
+    initial = true;
+    
+    break;
+    case 5:
     txt = "TRULY";
     cont = true;
     initial = true;
+    fadeInBackground();
     break;
-case 5:
+case 6:
     txt = "EXCELLENT.";
     cont = false;
     initial = false;
     break;
-    case 6:
+    case 7:
     txt = "NOW.";
     cont = false;
     initial = true;
     break;
-case 7:
+case 8:
     txt = "WE MAY";
     cont = true;
     initial = true;
     break;
-    case 8:
+    case 9:
     txt = "BEGIN.";
     cont = false;
     initial = false;
     break;
-    case 9:
+    case 10:
     txt = "FIRST.";
     cont = false;
     initial = true;
     break;
-    case 10:
+    case 11:
     txt = "YOU MUST DESCRIBE";
     cont = true;
     initial = true;
     break;
-    case 11:
+    case 12:
     txt = "THE VESSEL.";
     cont = false;
     initial = false;
@@ -96,7 +110,7 @@ function eventDisplayer() { /*This function is gonna be called when the typewrit
 function interacter() { /*This is the part called with the button. It checks if the current line has finished typing, if we are not out of dialogue switch cases.*/
 	        autoplay = document.getElementById('audioplay')
 	        promise = autoplay.play()
-    if(i==0 && line<12){
+    if(i==0 && line<13){
         if(initial==true){ 
     document.getElementById('typeout').innerHTML=''; /*If the next line is the first line, clear the typeout div.*/
 } typeWriter(); /*This calls the typewriter function if it passes the checks.*/
