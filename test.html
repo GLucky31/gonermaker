@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Looping Background Ripple</title>
+  <title>Continuous Ripple Background</title>
   <style>
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -33,7 +33,7 @@
       background-position: center;
       opacity: 0;
       transform: scale(1);
-      transition: opacity 2s ease, transform 2s ease;
+      transition: opacity 3s ease-in-out, transform 3s ease-in-out;
       mix-blend-mode: screen;
       will-change: opacity, transform;
     }
@@ -46,42 +46,35 @@
 <script>
   const wrapper = document.getElementById('background-wrapper');
 
-  function createBackgroundLayer(scaleFactor, opacity) {
+  function createRipple() {
     const layer = document.createElement('div');
     layer.classList.add('background-layer');
     wrapper.appendChild(layer);
 
-    // Trigger animation
+    // Start transition on next frame
     requestAnimationFrame(() => {
-      layer.style.opacity = opacity;
-      layer.style.transform = `scale(${scaleFactor})`;
+      layer.style.opacity = '0.3';
+      layer.style.transform = 'scale(2)';
     });
 
-    // Clean up after animation
+    // Fade out after animation
     setTimeout(() => {
-      layer.style.opacity = 0;
-    }, 2000);
+      layer.style.opacity = '0';
+    }, 1500); // halfway point to start fading (optional)
 
-    // Remove from DOM after fade out
+    // Remove element after full animation
     setTimeout(() => {
       wrapper.removeChild(layer);
-    }, 4000);
+    }, 3000); // match transition duration
   }
 
-  function startLoopingEffect() {
-    let count = 0;
-    setInterval(() => {
-      // Create 3 ripples with a staggered delay
-      for (let i = 0; i < 3; i++) {
-        setTimeout(() => {
-          createBackgroundLayer(1 + i * 0.5, 0.3);
-        }, i * 300);
-      }
-    }, 2500); // loop interval
-  }
+  // Start a new ripple every 500ms
+  setInterval(createRipple, 500);
 
-  // Start the effect when the page loads
-  window.onload = startLoopingEffect();
+  // Optional: start a few ripples at once to fill space quickly
+  for (let i = 0; i < 3; i++) {
+    setTimeout(createRipple, i * 500);
+  }
 </script>
 
 </body>
